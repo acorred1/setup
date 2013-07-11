@@ -20,24 +20,35 @@ npm install -g jshint
 # See: http://nodejs.org/api/repl.html#repl_repl
 sudo apt-get install -y rlwrap
 
-# Install emacs24
-# https://launchpad.net/~cassou/+archive/emacs
-sudo apt-add-repository -y ppa:cassou/emacs
-sudo apt-get update
-sudo apt-get install -y emacs24 emacs24-el emacs24-common-non-dfsg
+#Install useful vim plugins
+#Pathogen
+mkdir -p ~/.vim/autoload ~/.vim/bundle; curl -Sso ~/.vim/autoload/pathogen.vim https://raw.github.com/tpope/vim-pathogen/master/autoload/pathogen.vim
+
+#Create .vimrc
+cd $HOME
+if [ -s ~/.vimrc ]; then
+	grep -qv "execute pathogen#infect()" || echo "execute pathogen#infect()" >> ~/.vimrc
+else 
+	echo "execute pathogen#infect()" > ~/.vimrc
+	echo "syntax on" >> ~/.vimrc
+	echo "filetype plugin indent on" >> ~/.vimrc
+	echo 'let g:slime_target = "screen"' >> ~/.vimrc
+	echo "let g:syntastic_always_populate_loc_list=1" >> ~/.vimrc
+fi
+
+#Add plug ins
+cd ~/.vim/bundle
+git clone git://github.com/jpalardy/vim-slime.git
+git clone https://github.com/scrooloose/syntastic.git
+git clone git://github.com/tpope/vim-fugitive.git
 
 # git pull and install dotfiles as well
 cd $HOME
 if [ -d ./dotfiles/ ]; then
     mv dotfiles dotfiles.old
 fi
-if [ -d .emacs.d/ ]; then
-    mv .emacs.d .emacs.d~
-fi
-git clone https://github.com/startup-class/dotfiles.git
+git clone https://github.com/acorred1/dotfiles.git
 ln -sb dotfiles/.screenrc .
 ln -sb dotfiles/.bash_profile .
 ln -sb dotfiles/.bashrc .
 ln -sb dotfiles/.bashrc_custom .
-ln -sf dotfiles/.emacs.d .
-
