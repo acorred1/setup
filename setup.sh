@@ -42,6 +42,11 @@ git clone git://github.com/jpalardy/vim-slime.git
 git clone https://github.com/scrooloose/syntastic.git
 git clone git://github.com/tpope/vim-fugitive.git
 
+
+#Install heroku toolbelt
+wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
+
+
 # git pull and install dotfiles as well
 cd $HOME
 if [ -d ./dotfiles/ ]; then
